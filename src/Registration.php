@@ -2,6 +2,9 @@
 
 namespace Wambo\Cart;
 
+use Wambo\Core\App;
+use Wambo\Core\Module\ModuleBootstrapInterface;
+
 /**
  * Class Registration registers the cart module in the Wambo app.
  *
