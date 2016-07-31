@@ -2,6 +2,9 @@
 
 namespace Wambo\Cart;
 
+use Wambo\Cart\Controller\CartController;
+use Wambo\Cart\Storage\CartRepositoryInterface;
+use Wambo\Cart\Storage\JSONCartRepository;
 use Wambo\Core\App;
 use Wambo\Core\Module\ModuleBootstrapInterface;
 
@@ -30,6 +33,7 @@ class Registration implements ModuleBootstrapInterface
      */
     private function registerRoutes(App $app)
     {
+        $app->get("/cart", ["CartController", "getCart"]);
     }
 
     /**
@@ -41,5 +45,8 @@ class Registration implements ModuleBootstrapInterface
     {
         /** @var \DI\Container $container */
         $container = $app->getContainer();
+
+        $container->set(CartRepositoryInterface::class, \DI\object(JSONCartRepository::class));
+        $container->set('CartController', \DI\object(CartController::class));
     }
 }

@@ -25,6 +25,7 @@
   },
   "require": {
     "wambo/module-core": "^0.2.0",
+    "wambo/module-catalog": "*",
     "slim/twig-view": "^2.1"
   },
   "require-dev": {
