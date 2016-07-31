@@ -2,7 +2,11 @@
 
 namespace Wambo\Cart;
 
+use RandomLib\Factory as RandomNumberGeneratorFactory;
+use RandomLib\Generator as RandomNumberGenerator;
+use SecurityLib\Strength as RandomNumberStrength;
 use Wambo\Cart\Controller\CartController;
+use Wambo\Cart\Service\CartFactory;
 use Wambo\Cart\Storage\CartRepositoryInterface;
 use Wambo\Cart\Storage\JSONCartRepository;
 use Wambo\Core\App;
@@ -34,6 +38,7 @@ class Registration implements ModuleBootstrapInterface
     private function registerRoutes(App $app)
     {
         $app->get("/cart", ["CartController", "getCart"]);
+        $app->post("/cart", ["CartController", "createCart"]);
     }
 
     /**
@@ -46,7 +51,20 @@ class Registration implements ModuleBootstrapInterface
         /** @var \DI\Container $container */
         $container = $app->getContainer();
 
+        // Random Number Generator
+        $container->set(RandomNumberGenerator::class, function () {
+            $randomNumberGeneratorFactory = new RandomNumberGeneratorFactory;
+            $randomNumberGenerator = $randomNumberGeneratorFactory->getGenerator(new RandomNumberStrength(RandomNumberStrength::MEDIUM));
+            return $randomNumberGenerator;
+        });
+
+        // Cart Factory
+        $container->set(CartFactory::class, \DI\object(CartFactory::class));
+
+        // Cart Repository
         $container->set(CartRepositoryInterface::class, \DI\object(JSONCartRepository::class));
+
+        // Cart Controller
         $container->set('CartController', \DI\object(CartController::class));
     }
 }
