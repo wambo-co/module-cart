@@ -1,5 +1,5 @@
 <?php
-namespace Wambo\Cart\Storage;
+namespace Wambo\Cart\Service\Storage;
 
 use Wambo\Cart\Model\Cart;
 

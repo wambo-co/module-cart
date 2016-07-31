@@ -35,6 +35,6 @@ class CartFactory
     public function createCart(): Cart
     {
         $cartIdentifier = $this->randomNumberGenerator->generateString(40, "abcdef0123456789");
-        return new Cart($cartIdentifier);
+        return new Cart($cartIdentifier, []);
     }
 }

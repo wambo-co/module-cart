@@ -9,23 +9,24 @@ namespace Wambo\Cart\Model;
  */
 class Cart
 {
-    /** @var CartItem[] $items */
-    public $items;
-
     /**
      * @var string
      */
     private $cartIdentifier;
 
+    /** @var CartItem[] $items */
+    private $items;
+
     /**
      * Create a new Cart instance.
      *
      * @param string $cartIdentifier A cart identifier
+     * @param array  $cartItems      A list of cart items
      */
-    public function __construct(string $cartIdentifier)
+    public function __construct(string $cartIdentifier, array $cartItems)
     {
         $this->cartIdentifier = $cartIdentifier;
-        $this->items = [];
+        $this->items = $cartItems;
     }
 
     /**
@@ -34,5 +35,15 @@ class Cart
     public function getCartIdentifier(): string
     {
         return $this->cartIdentifier;
+    }
+
+    /**
+     * Get all cart items
+     *
+     * @return CartItem[]
+     */
+    public function getItems(): array
+    {
+        return $this->items;
     }
 }

@@ -5,9 +5,7 @@ namespace Wambo\Cart\Controller;
 use Psr\Http\Message\ResponseInterface;
 use Slim\Http\Request;
 use Slim\Http\Response;
-use Wambo\Cart\Model\Cart;
-use Wambo\Cart\Service\CartFactory;
-use Wambo\Cart\Storage\CartRepositoryInterface;
+use Wambo\Cart\Orchestrator\CartOrchestrator;
 
 /**
  * Class CartController provides API methods for common shopping cart operations.
@@ -17,24 +15,19 @@ use Wambo\Cart\Storage\CartRepositoryInterface;
 class CartController
 {
     /**
-     * @var CartRepositoryInterface
+     * @var CartOrchestrator
      */
-    private $cartRepository;
-    /**
-     * @var CartFactory
-     */
-    private $cartFactory;
+    private $cartOrchestrator;
 
     /**
      * Create a new CartController instance.
      *
-     * @param CartRepositoryInterface $cartRepository An instance of the cart repository.
-     * @param CartFactory             $cartFactory    A cart factory
+     * @param CartOrchestrator $cartOrchestrator
+     *
      */
-    public function __construct(CartRepositoryInterface $cartRepository, CartFactory $cartFactory)
+    public function __construct(CartOrchestrator $cartOrchestrator)
     {
-        $this->cartRepository = $cartRepository;
-        $this->cartFactory = $cartFactory;
+        $this->cartOrchestrator = $cartOrchestrator;
     }
 
     /**
@@ -50,7 +43,7 @@ class CartController
         $cartIdentifier = $this->getCartIdentifierFromCookieParams($request->getCookieParams());
         if (strlen($cartIdentifier) != 0) {
 
-            if ($this->cartRepository->getCart($cartIdentifier) != null) {
+            if ($this->cartOrchestrator->getCart($cartIdentifier) != null) {
 
                 // Bad request
                 return $response->withStatus(400, "You already have a cart");
@@ -58,9 +51,7 @@ class CartController
 
         }
 
-        $cart = $this->cartFactory->createCart();
-        $this->cartRepository->saveCart($cart);
-
+        $cart = $this->cartOrchestrator->createCart();
         return $response->withJson($cart);
     }
 
@@ -80,7 +71,7 @@ class CartController
             return $response->withStatus(400, "No cart identifier supplied");
         }
 
-        $cart = $this->cartRepository->getCart($cartIdentifier);
+        $cart = $this->cartOrchestrator->getCart($cartIdentifier);
         if (is_null($cart)) {
             // Not found
             return $response->withStatus(404, "Cart not found");

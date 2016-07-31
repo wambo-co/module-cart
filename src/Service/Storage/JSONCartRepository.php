@@ -1,6 +1,6 @@
 <?php
 
-namespace Wambo\Cart\Storage;
+namespace Wambo\Cart\Service\Storage;
 
 use Wambo\Cart\Model\Cart;
 
@@ -20,7 +20,7 @@ class JSONCartRepository implements CartRepositoryInterface
      */
     public function getCart(string $cartIdentifier): Cart
     {
-        return new Cart($cartIdentifier);
+        return new Cart($cartIdentifier, []);
     }
 
     /**

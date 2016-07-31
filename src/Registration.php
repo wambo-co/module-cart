@@ -6,9 +6,12 @@ use RandomLib\Factory as RandomNumberGeneratorFactory;
 use RandomLib\Generator as RandomNumberGenerator;
 use SecurityLib\Strength as RandomNumberStrength;
 use Wambo\Cart\Controller\CartController;
+use Wambo\Cart\Orchestrator\CartOrchestrator;
 use Wambo\Cart\Service\CartFactory;
-use Wambo\Cart\Storage\CartRepositoryInterface;
-use Wambo\Cart\Storage\JSONCartRepository;
+use Wambo\Cart\Service\Mapper\CartItemModelMapper;
+use Wambo\Cart\Service\Mapper\CartModelMapper;
+use Wambo\Cart\Service\Storage\CartRepositoryInterface;
+use Wambo\Cart\Service\Storage\JSONCartRepository;
 use Wambo\Core\App;
 use Wambo\Core\Module\ModuleBootstrapInterface;
 
@@ -63,6 +66,13 @@ class Registration implements ModuleBootstrapInterface
 
         // Cart Repository
         $container->set(CartRepositoryInterface::class, \DI\object(JSONCartRepository::class));
+
+        // Model Mappers
+        $container->set(CartModelMapper::class, \DI\object(CartModelMapper::class));
+        $container->set(CartItemModelMapper::class, \DI\object(CartItemModelMapper::class));
+
+        // Cart Orchestrator
+        $container->set(CartOrchestrator::class, \DI\object(CartOrchestrator::class));
 
         // Cart Controller
         $container->set('CartController', \DI\object(CartController::class));
