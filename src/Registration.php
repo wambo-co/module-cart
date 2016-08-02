@@ -2,6 +2,8 @@
 
 namespace Wambo\Cart;
 
+use League\Flysystem\Adapter\Local;
+use League\Flysystem\Filesystem;
 use RandomLib\Factory as RandomNumberGeneratorFactory;
 use RandomLib\Generator as RandomNumberGenerator;
 use SecurityLib\Strength as RandomNumberStrength;
@@ -11,8 +13,9 @@ use Wambo\Cart\Service\CartFactory;
 use Wambo\Cart\Service\Mapper\CartItemModelMapper;
 use Wambo\Cart\Service\Mapper\CartModelMapper;
 use Wambo\Cart\Service\Storage\CartRepositoryInterface;
-use Wambo\Cart\Service\Storage\JSONCartRepository;
+use Wambo\Cart\Service\Storage\CartRepository;
 use Wambo\Core\App;
+use Wambo\Core\Module\JSONModuleStorage;
 use Wambo\Core\Module\ModuleBootstrapInterface;
 
 /**
@@ -65,7 +68,15 @@ class Registration implements ModuleBootstrapInterface
         $container->set(CartFactory::class, \DI\object(CartFactory::class));
 
         // Cart Repository
-        $container->set(CartRepositoryInterface::class, \DI\object(JSONCartRepository::class));
+        $container->set(CartRepositoryInterface::class, function() {
+            $cartStorageFile = "carts.json";
+            $testResourceFolderPath = realpath(WAMBO_ROOT_DIR . "/var");
+
+            $localFilesystemAdapter = new Local($testResourceFolderPath);
+            $filesystem = new Filesystem($localFilesystemAdapter);
+            $cartStorage = new JSONModuleStorage($filesystem, $cartStorageFile);
+            return new CartRepository($cartStorage);
+        });
 
         // Model Mappers
         $container->set(CartModelMapper::class, \DI\object(CartModelMapper::class));

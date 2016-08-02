@@ -14,8 +14,8 @@ class Cart
      */
     private $cartIdentifier;
 
-    /** @var CartItem[] $items */
-    private $items;
+    /** @var CartItem[] $cartItems */
+    private $cartItems;
 
     /**
      * Create a new Cart instance.
@@ -26,7 +26,7 @@ class Cart
     public function __construct(string $cartIdentifier, array $cartItems)
     {
         $this->cartIdentifier = $cartIdentifier;
-        $this->items = $cartItems;
+        $this->cartItems = $cartItems;
     }
 
     /**
@@ -44,6 +44,6 @@ class Cart
      */
     public function getItems(): array
     {
-        return $this->items;
+        return $this->cartItems;
     }
 }
