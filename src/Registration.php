@@ -40,8 +40,8 @@ class Registration implements ModuleBootstrapInterface
      */
     private function registerRoutes(App $app)
     {
-        $app->get("/cart", ["CartController", "getCart"]);
-        $app->post("/cart", ["CartController", "createCart"]);
+        $app->get("/api/cart", ["CartController", "getCart"]);
+        $app->post("/api/cart", ["CartController", "createCart"]);
     }
 
     /**
