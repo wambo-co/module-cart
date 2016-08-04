@@ -24,7 +24,7 @@
     }
   },
   "require": {
-    "wambo/module-core": "^0.2.0",
+    "wambo/module-core": "*",
     "wambo/module-catalog": "*",
     "ircmaxell/random-lib": "v1.1.0",
     "slim/twig-view": "^2.1"
