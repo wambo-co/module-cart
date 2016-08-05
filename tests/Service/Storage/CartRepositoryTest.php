@@ -1,9 +1,13 @@
 <?php
 
+namespace Wambo\Cart\Service\Storage;
+
+use PHPUnit\Framework\TestCase;
+
 /**
  * Class JSONCartRepositoryTest tests the \Wambo\Cart\Service\Storage\CartRepository class.
  */
-class CartRepositoryTest extends PHPUnit_Framework_TestCase
+class CartRepositoryTest extends TestCase
 {
     /**
      * @test
