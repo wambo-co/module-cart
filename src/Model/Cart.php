@@ -18,6 +18,11 @@ class Cart
     private $cartItems;
 
     /**
+     * @var CartPluginInterface[] $plugins
+     */
+    private $plugins;
+
+    /**
      * Create a new Cart instance.
      *
      * @param string $cartIdentifier A cart identifier
@@ -27,6 +32,7 @@ class Cart
     {
         $this->cartIdentifier = $cartIdentifier;
         $this->cartItems = $cartItems;
+        $this->plugins = [];
     }
 
     /**
@@ -46,4 +52,31 @@ class Cart
     {
         return $this->cartItems;
     }
+
+    public function addPlugin(CartPluginInterface $plugin)
+    {
+        $this->plugins[] = $plugin;
+    }
+
+    public function getSubtotal()
+    {
+        $subtotal = 0;
+        foreach($this->cartItems as $item){
+            $subtotal += $item->getPrice()->getAmount();
+        }
+        return $subtotal;
+    }
+
+    public function getTotals()
+    {
+        $totals['subtotal'] = $this->getSubtotal();
+        foreach($this->plugins as $plugin){
+            $total = $plugin->execute($this);
+            $totals = array_merge($totals, $total);
+        }
+        return $totals;
+    }
+
+
+
 }

@@ -3,7 +3,7 @@
 namespace Wambo\Cart\Model;
 
 
-class CartPluginInterface
+interface CartPluginInterface
 {
-
+    public function execute(Cart $cart);
 }
