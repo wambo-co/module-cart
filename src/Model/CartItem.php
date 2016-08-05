@@ -2,6 +2,8 @@
 
 namespace Wambo\Cart\Model;
 
+use Wambo\Core\Model\Qty;
+
 /**
  * Class CartItem represents a single cart item.
  *
@@ -15,13 +17,20 @@ class CartItem
     private $sku;
 
     /**
+     * @var Qty
+     */
+    private $qty;
+
+    /**
      * Create a new CartItem instance.
      *
-     * @param string $sku The SKU of a product
+     * @param string    $sku    The SKU of a product
+     * @param Qty       $qty    The Qty of a item for the product
      */
-    public function __construct(string $sku)
+    public function __construct(string $sku, Qty $qty)
     {
         $this->sku = $sku;
+        $this->qty = $qty;
     }
 
     /**
