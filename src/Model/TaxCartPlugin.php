@@ -19,7 +19,7 @@ class TaxCartPlugin implements CartPluginInterface
     {
         $subtotal = $cart->getSubtotal();
 
-        $taxAmount = $subtotal * $this->taxRate;
+        $taxAmount = $subtotal->multiply($this->taxRate);
         return array('tax' => $taxAmount);
     }
 }

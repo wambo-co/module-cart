@@ -1,6 +1,8 @@
 <?php
 
 namespace Wambo\Cart\Model;
+use Money\Currency;
+use Money\Money;
 
 /**
  * Class Cart is the shopping cart model.
@@ -60,9 +62,9 @@ class Cart
 
     public function getSubtotal()
     {
-        $subtotal = 0;
+        $subtotal = new Money(0, new Currency('EUR'));
         foreach($this->cartItems as $item){
-            $subtotal += $item->getPrice()->getAmount();
+            $subtotal = $subtotal->add($item->getPrice());
         }
         return $subtotal;
     }

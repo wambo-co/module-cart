@@ -28,7 +28,7 @@ class CartTest extends TestCase
         $cartItem1 = new CartItem(
             new SKU('ab-123'),
             new Qty(2),
-            Money::EUR(399)
+            Money::EUR(99)
         );
         $cart = new Cart('asdfasdf', [$cartItem1]);
 
