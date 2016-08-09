@@ -5,6 +5,8 @@ namespace Wambo\Cart\Model;
 
 class TaxCartPlugin implements CartPluginInterface
 {
+    const NAME = 'tax';
+
     /**
      * @var float
      */
@@ -17,9 +19,10 @@ class TaxCartPlugin implements CartPluginInterface
 
     public function execute(Cart $cart)
     {
-        $subtotal = $cart->getSubtotal();
-
+        $subtotal = $cart->getSubtotal()->getAmount();
         $taxAmount = $subtotal->multiply($this->taxRate);
-        return array('tax' => $taxAmount);
+
+        $total = new Total(self::NAME, $taxAmount, 1);
+        $cart->addTotal($total);
     }
 }

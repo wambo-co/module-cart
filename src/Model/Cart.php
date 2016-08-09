@@ -25,6 +25,11 @@ class Cart
     private $plugins;
 
     /**
+     * @var TotalInterface[] $totals
+     */
+    private $totals;
+
+    /**
      * Create a new Cart instance.
      *
      * @param string $cartIdentifier A cart identifier
@@ -34,7 +39,9 @@ class Cart
     {
         $this->cartIdentifier = $cartIdentifier;
         $this->cartItems = $cartItems;
+
         $this->plugins = [];
+        $this->totals = [];
     }
 
     /**
@@ -60,23 +67,50 @@ class Cart
         $this->plugins[] = $plugin;
     }
 
+    /**
+     * @return Total
+     */
     public function getSubtotal()
     {
-        $subtotal = new Money(0, new Currency('EUR'));
+        $subtotalSum = new Money(0, new Currency('EUR'));
         foreach($this->cartItems as $item){
-            $subtotal = $subtotal->add($item->getPrice());
+            $subtotalSum = $subtotalSum->add($item->getPrice());
         }
+
+        $subtotal = new Total('subtotal', $subtotalSum, 0);
         return $subtotal;
     }
 
+    /**
+     * @param TotalInterface $total
+     */
+    public function addTotal(TotalInterface $total)
+    {
+        array_push($this->totals, $total);
+    }
+
+    /**
+     * @return array|TotalInterface[]
+     */
     public function getTotals()
     {
-        $totals['subtotal'] = $this->getSubtotal();
+        $subtotal = $this->getSubtotal();
+        array_push($this->totals, $subtotal);
         foreach($this->plugins as $plugin){
-            $total = $plugin->execute($this);
-            $totals = array_merge($totals, $total);
+            $plugin->execute($this);
         }
-        return $totals;
+        $this->sortTotals();
+        return $this->totals;
+    }
+    
+    private function sortTotals()
+    {
+        usort($this->totals, function($a, $b){
+            if ($a->getSort() == $b->getSort()) {
+                return 0;
+            }
+            return ($a->getSort() < $b->getSort() ) ? -1 : 1;
+        });
     }
 
 
