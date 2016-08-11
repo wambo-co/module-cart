@@ -3,6 +3,7 @@
 namespace Wambo\Cart\Model;
 
 use Money\Money;
+use Wambo\Checkout\Model\Core\SKU;
 use Wambo\Core\Model\Qty;
 
 /**
@@ -10,7 +11,7 @@ use Wambo\Core\Model\Qty;
  *
  * @package Wambo\Cart\Model
  */
-class CartItem
+class CartItem implements CartItemInterface
 {
     /**
      * @var string
@@ -46,7 +47,7 @@ class CartItem
      *
      * @return string
      */
-    public function getSku(): string
+    public function getSku(): SKU
     {
         return $this->sku;
     }
@@ -54,7 +55,7 @@ class CartItem
     /**
      * @return Qty
      */
-    public function getQty()
+    public function getQty() : Qty
     {
         return $this->qty;
     }
@@ -62,7 +63,7 @@ class CartItem
     /**
      * @return Money
      */
-    public function getPrice()
+    public function getPrice() : Money
     {
         return $this->price;
     }

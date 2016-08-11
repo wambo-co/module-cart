@@ -5,57 +5,77 @@ namespace Wambo\Cart\Model;
 
 use Money\Money;
 
-class Total implements TotalInterface
+class Total
 {
-    /**
-     * @var string
-     */
-    private $name;
 
     /**
      * @var Money
      */
-    private $amount;
+    private $subTotal;
 
     /**
-     * @var int
+     * @var Money
      */
-    private $sort;
+    private $grandTotal;
 
     /**
-     * Total constructor.
-     * @param string $name
-     * @param Money $amount
-     * @param int $sort
+     * @var TotalItemInterface[]
      */
-    public function __construct(string $name, Money $amount, int $sort)
+    private $totals = [];
+
+    /**
+     * Totals constructor.
+     * @param Money $subTotal
+     * @param Money $grandTotal
+     */
+    public function __construct(Money $subTotal)
     {
-        $this->name = $name;
-        $this->amount = $amount;
-        $this->sort = $sort;
+        $this->subTotal = $subTotal;
+        $this->grandTotal = $subTotal;
+    }
+
+    public function getSubTotal() : Money
+    {
+        return $this->subTotal;
     }
 
     /**
-     * @return string
+     * @param TotalItemInterface $total
      */
-    public function getName()
+    public function addTotal(TotalItemInterface $total)
     {
-        return $this->name;
+        array_push($this->totals, $total);
+        $this->sortTotals();
     }
 
     /**
-     * @return int
+     * Sort Totals by total->getSort()
      */
-    public function getSort()
+    private function sortTotals()
     {
-        return $this->sort;
+        usort($this->totals, function($a, $b){
+            if ($a->getSort() == $b->getSort()) {
+                return 0;
+            }
+            return ($a->getSort() < $b->getSort() ) ? -1 : 1;
+        });
     }
 
     /**
      * @return Money
      */
-    public function getAmount()
+    public function getGrandTotal(): Money
     {
-        return $this->amount;
+        return $this->grandTotal;
     }
+
+    /**
+     * @param Money $grandTotal
+     */
+    public function setGrandTotal(Money $grandTotal)
+    {
+        $this->grandTotal = $grandTotal;
+    }
+
+
 }

@@ -12,17 +12,31 @@ class TaxCartPlugin implements CartPluginInterface
      */
     private $taxRate;
 
+    /**
+     * TaxCartPlugin constructor.
+     * @param float $taxRate
+     */
     public function __construct(float $taxRate)
     {
         $this->taxRate = $taxRate;
     }
 
+    /**
+     * @param Cart $cart
+     */
     public function execute(Cart $cart)
     {
-        $subtotal = $cart->getSubtotal()->getAmount();
+        $total = $cart->getTotal();
+        $subtotal = $total->getSubTotal();
+
         $taxAmount = $subtotal->multiply($this->taxRate);
 
-        $total = new Total(self::NAME, $taxAmount, 1);
-        $cart->addTotal($total);
+        $totalItem = new TotalItem(self::NAME, $taxAmount, 1);
+        $total->addTotal($totalItem);
+
+        $newGrandTotal = $total->getGrandTotal()->add($taxAmount);
+
+        $total->setGrandTotal($newGrandTotal);
+
     }
 }

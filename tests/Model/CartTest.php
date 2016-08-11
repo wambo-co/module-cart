@@ -19,23 +19,31 @@ class CartTest extends TestCase
     public function test_constructor()
     {
         // arrange
-        $cart = new Cart(3,[]);
-
+        $cart = new Cart(3);
     }
 
     public function test_bigAllInOneTestNotFinal()
     {
+
         $cartItem1 = new CartItem(
             new SKU('ab-123'),
             new Qty(2),
             Money::EUR(99)
         );
-        $cart = new Cart('asdfasdf', [$cartItem1]);
+
+        $cartItem2 = new CartItem(
+            new SKU('xy-321'),
+            new Qty(2),
+            Money::EUR(500)
+        );
+
 
         $taxPlugin = new TaxCartPlugin(0.19);
-        $cart->addPlugin($taxPlugin);
 
-        $totals = $cart->getTotals();
+
+        $cart = new Cart('asdfasdf', [$cartItem1, $cartItem2], [$taxPlugin]);
+
+        $totals = $cart->getTotal();
         print_r($totals);
     }
 }
