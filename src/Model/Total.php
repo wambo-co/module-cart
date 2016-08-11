@@ -2,9 +2,12 @@
 
 namespace Wambo\Cart\Model;
 
-
 use Money\Money;
 
+/**
+ * Class Total
+ * @package Wambo\Cart\Model
+ */
 class Total
 {
 
@@ -26,7 +29,6 @@ class Total
     /**
      * Totals constructor.
      * @param Money $subTotal
-     * @param Money $grandTotal
      */
     public function __construct(Money $subTotal)
     {

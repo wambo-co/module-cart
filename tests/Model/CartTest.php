@@ -44,6 +44,5 @@ class CartTest extends TestCase
         $cart = new Cart('asdfasdf', [$cartItem1, $cartItem2], [$taxPlugin]);
 
         $totals = $cart->getTotal();
-        print_r($totals);
     }
 }
