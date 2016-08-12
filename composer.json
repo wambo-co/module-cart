@@ -26,6 +26,7 @@
   "require": {
     "wambo/module-core": "*",
     "wambo/module-catalog": "*",
+    "wambo/module-checkout": "*",
     "ircmaxell/random-lib": "v1.1.0",
     "slim/twig-view": "^2.1",
     "mathiasverraes/money": "^1.3"
