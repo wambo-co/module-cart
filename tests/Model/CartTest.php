@@ -4,7 +4,7 @@ namespace Wambo\Cart\Model;
 
 use Money\Money;
 use PHPUnit\Framework\TestCase;
-use Wambo\Catalog\Model\SKU;
+use Wambo\Core\Model\SKU;
 use Wambo\Core\Model\Qty;
 
 /**
