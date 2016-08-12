@@ -1,15 +1,16 @@
 <?php
-
 namespace Wambo\Cart\Model;
+
 use Money\Currency;
 use Money\Money;
+use Wambo\Checkout\Model\Cart\CartInterface;
 
 /**
  * Class Cart is the shopping cart model.
  *
  * @package Wambo\Cart\Model
  */
-class Cart
+class Cart implements CartInterface
 {
     /**
      * @var string
