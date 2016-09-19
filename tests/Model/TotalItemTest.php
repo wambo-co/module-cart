@@ -3,6 +3,7 @@ namespace Wambo\Cart\Model;
 
 use Money\Money;
 use PHPUnit\Framework\TestCase;
+use Wambo\Core\Model\TotalItem;
 
 class TotalItemTest extends TestCase
 {

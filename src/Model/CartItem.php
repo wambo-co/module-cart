@@ -45,7 +45,7 @@ class CartItem implements CartItemInterface
     /**
      * Get the SKU of the product.
      *
-     * @return string
+     * @return SKU
      */
     public function getSku(): SKU
     {

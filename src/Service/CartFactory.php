@@ -4,6 +4,7 @@ namespace Wambo\Cart\Service;
 
 use RandomLib\Generator;
 use Wambo\Cart\Model\Cart;
+use Wambo\Checkout\Model\Cart\CartInterface;
 
 /**
  * Class CartFactory creates new Cart models.
@@ -30,9 +31,9 @@ class CartFactory
     /**
      * Create a new Cart model.
      *
-     * @return Cart
+     * @return CartInterface
      */
-    public function createCart(): Cart
+    public function createCart(): CartInterface
     {
         $cartIdentifier = $this->randomNumberGenerator->generateString(40, "abcdef0123456789");
         return new Cart($cartIdentifier, []);

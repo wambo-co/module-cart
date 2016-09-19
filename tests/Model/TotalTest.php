@@ -1,10 +1,9 @@
 <?php
-
 namespace Wambo\Cart\Model;
-
 
 use Money\Money;
 use PHPUnit\Framework\TestCase;
+use Wambo\Core\Model\Total;
 
 class TotalTest extends TestCase
 {

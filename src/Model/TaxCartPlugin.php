@@ -1,7 +1,7 @@
 <?php
-
 namespace Wambo\Cart\Model;
 
+use Wambo\Core\Model\TotalItem;
 
 class TaxCartPlugin implements CartPluginInterface
 {
@@ -32,7 +32,7 @@ class TaxCartPlugin implements CartPluginInterface
         $taxAmount = $subtotal->multiply($this->taxRate);
 
         $totalItem = new TotalItem(self::NAME, $taxAmount, 1);
-        $total->addTotal($totalItem);
+        $total->addTotalItem($totalItem);
 
         $newGrandTotal = $total->getGrandTotal()->add($taxAmount);
 

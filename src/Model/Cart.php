@@ -4,6 +4,8 @@ namespace Wambo\Cart\Model;
 use Money\Currency;
 use Money\Money;
 use Wambo\Checkout\Model\Cart\CartInterface;
+use Wambo\Core\Model\Total;
+use Wambo\Core\Model\TotalInterface;
 
 /**
  * Class Cart is the shopping cart model.
@@ -70,9 +72,9 @@ class Cart implements CartInterface
     }
 
     /**
-     * @return Total
+     * @return TotalInterface
      */
-    public function getTotal() : Total
+    public function getTotal() : TotalInterface
     {
         return $this->total;
     }
