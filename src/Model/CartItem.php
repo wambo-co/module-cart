@@ -3,8 +3,9 @@
 namespace Wambo\Cart\Model;
 
 use Money\Money;
-use Wambo\Checkout\Model\Core\SKU;
+use Wambo\Checkout\Model\Cart\CartItemInterface;
 use Wambo\Core\Model\Qty;
+use Wambo\Core\Model\SKU;
 
 /**
  * Class CartItem represents a single cart item.
@@ -14,7 +15,7 @@ use Wambo\Core\Model\Qty;
 class CartItem implements CartItemInterface
 {
     /**
-     * @var string
+     * @var SKU
      */
     private $sku;
 
@@ -31,11 +32,11 @@ class CartItem implements CartItemInterface
     /**
      * Create a new CartItem instance.
      *
-     * @param string $sku The SKU of a product
+     * @param SKU $sku The SKU of a product
      * @param Qty $qty The Qty of a item for the product
      * @param Money $price
      */
-    public function __construct(string $sku, Qty $qty, Money $price)
+    public function __construct(SKU $sku, Qty $qty, Money $price)
     {
         $this->sku = $sku;
         $this->qty = $qty;
